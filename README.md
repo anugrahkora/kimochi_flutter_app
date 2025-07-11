@@ -33,8 +33,8 @@ A simple Flutter application that allows users to search for universities by cou
 
 ### 🔧 Setup Instructions
 ```bash
-git clone https://github.com/your-username/university-search-app.git
-cd university-search-app
+git clone https://github.com/anugrahkora/kimochi_flutter_app.git
+cd kimochi_flutter_app
 flutter pub get
 flutter run
 ```
@@ -52,20 +52,52 @@ flutter run
 
 ## Project Structure
 lib/
+├── app/
+│   ├── main_app.dart             
+│   └── router.dart                
 │
-├── models/
-│   └── university.dart 
+├── core/
+│   ├── constants/
+│   │   └── app_constants.dart     
+│   └── providers/
+│       └── providers.dart         
 │
 ├── services/
-│   └── network_service.dart
+│   └── network_service.dart     
+│
+├── features/
+│   ├── details/
+│   │   └── view/
+│   │       └── details_view.dart 
+│   └── home/
+│       ├── view/
+│       │   └── home_view.dart   
+│       └── view_model/
+│           └── home_view_model.dart  
+│
+├── models/
+│   └── university.dart           
 │
 ├── repositories/
-│   └── university_repository.dart
+│   └── university_repository.dart 
 │
-│
-└── main.dart 
+└── main.dart                 
+
+app/ – App initialization logic (router, root widget)
+
+core/ – Common constants and providers used app-wide
+
+services/ – App-level services like API/network
+
+features/ – Feature-specific views and logic (e.g., home, details)
+
+models/ – Data model classes
+
+repositories/ – Data abstraction and communication layer
+
+main.dart – App entry point
 
 ## Security & Error Handling
 - Input validation for country search
-- Graceful error messages for failed network calls
+- error messages for failed network calls
 - Null-safety enabled across the project
