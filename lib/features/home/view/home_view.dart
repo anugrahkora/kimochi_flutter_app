@@ -3,20 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kimochi_flutter_app/core/provider/providers.dart';
+import 'package:kimochi_flutter_app/features/home/view_model/home_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+
+// HomeView is the main view for the home screen
+// It allows users to search for universities by country
+// and displays a list of universities with their details
 
 class HomeView extends ConsumerWidget {
   HomeView({super.key});
 
   final TextEditingController _countryTextController = TextEditingController();
-  Future<void> _launchUrl(Uri url) async {
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    // Listen for changes in the HomeViewState and show error messages if any
+       ref.listen<HomeViewState>(homeViewModelProvider,
+        (previous, next) {
+      if (next.error != null && next.error != previous?.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.error!)),
+        );
+
+   // Reset the error state 
+        ref.read(homeViewModelProvider.notifier).clearError();
+      }
+    });
     final state = ref.watch(homeViewModelProvider);
     final viewModel = ref.read(homeViewModelProvider.notifier);
 
@@ -86,6 +100,7 @@ class HomeView extends ConsumerWidget {
                             : null,
                         trailing: TextButton(
                           onPressed: () {
+                            // Navigate to the details view with the selected university
                             context.push('/details', extra: university);
                           },
                           child: const Text('Details'),
