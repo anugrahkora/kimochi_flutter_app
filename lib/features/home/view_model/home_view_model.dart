@@ -37,7 +37,13 @@ class HomeViewModel extends StateNotifier<HomeViewState> {
       final result = await repository.getUniversities(country);
       state = state.copyWith(universities: result, isLoading: false);
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(
+        isLoading: false,
+        universities: [],
+        error: 'Error fetching universities',
+      );
     }
   }
+
+  void clearError() => state = state.copyWith(error: null);
 }
