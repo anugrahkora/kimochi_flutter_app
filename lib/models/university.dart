@@ -1,3 +1,4 @@
+// University model class created from JSON data
 class University {
     final List<String>? domains;
     final String? country;

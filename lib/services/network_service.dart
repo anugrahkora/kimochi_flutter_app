@@ -1,4 +1,7 @@
 import 'package:http/http.dart' as http;
+
+// NetworkService class for making HTTP requests
+
 class NetworkService{
   Future<http.Response> get(
     String url,
@@ -9,9 +12,4 @@ class NetworkService{
     return http.get(Uri.parse(url), headers: headers);
   }
 
- 
-
-
-
- 
 }
