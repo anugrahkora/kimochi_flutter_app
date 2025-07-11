@@ -6,7 +6,6 @@ import 'package:kimochi_flutter_app/core/provider/providers.dart';
 import 'package:kimochi_flutter_app/features/home/view_model/home_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 // HomeView is the main view for the home screen
 // It allows users to search for universities by country
 // and displays a list of universities with their details
@@ -18,16 +17,14 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     // Listen for changes in the HomeViewState and show error messages if any
-       ref.listen<HomeViewState>(homeViewModelProvider,
-        (previous, next) {
+    ref.listen<HomeViewState>(homeViewModelProvider, (previous, next) {
       if (next.error != null && next.error != previous?.error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.error!)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(next.error!)));
 
-   // Reset the error state 
+        // Reset the error state
         ref.read(homeViewModelProvider.notifier).clearError();
       }
     });
