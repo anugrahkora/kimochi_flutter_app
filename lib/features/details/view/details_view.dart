@@ -13,6 +13,9 @@ class DetailsView extends StatelessWidget {
     final webPages = universityDetails?.webPages?.isNotEmpty == true
         ? universityDetails!.webPages!.first
         : null;
+    final domain = universityDetails?.domains?.isNotEmpty == true
+        ? universityDetails!.domains!.first
+        : null;
     final stateProvince = universityDetails?.stateProvince ?? 'N/A';
     final alphaTwoCode = universityDetails?.alphaTwoCode ?? 'N/A';
     return Scaffold(
@@ -43,6 +46,7 @@ class DetailsView extends StatelessWidget {
               const Divider(),
               _buildValues('State Province', stateProvince),
               _buildValues('Alpha Two Code', alphaTwoCode),
+              _buildValues('Domain', domain),
             ],
           ),
         ),
