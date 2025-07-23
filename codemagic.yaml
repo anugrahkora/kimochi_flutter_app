@@ -1,0 +1,16 @@
+workflows:
+  ios-testflight:
+    name: iOS TestFlight Release 
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Install Flutter dependencies
+        script: flutter pub get
+      - name: Update cocoapod
+        script: pod update 
+      - name: Build Ios 
+        script: flutter build ios
+
+    artifacts:
+      - build/ios/ipa/*.ipa
