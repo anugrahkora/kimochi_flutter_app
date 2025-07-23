@@ -1,16 +1,27 @@
 workflows:
-  ios-testflight:
-    name: iOS TestFlight Release 
+  ios-unsigned-build:
+    name: iOS Unsigned Build
     environment:
       flutter: stable
       xcode: latest
     scripts:
-      - name: Install Flutter dependencies
-        script: flutter pub get
-      - name: Update cocoapod
-        script: pod update 
-      - name: Build Ios 
-        script: flutter build ios
+      - name: Install dependencies
+        script: |
+          flutter pub get
+          cd ios
+          pod install
+          cd ..
+
+      - name: Build unsigned iOS .app
+        script: |
+          flutter build ios --no-codesign --release
+
+      - name: Package .app into .ipa
+        script: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r unsigned.ipa Payload
+          rm -rf Payload
 
     artifacts:
-      - build/ios/ipa/*.ipa
+      - unsigned.ipa
