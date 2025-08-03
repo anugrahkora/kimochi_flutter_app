@@ -32,6 +32,7 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - build/**/outputs/**/*.aab
+      - build/app/outputs/flutter-apk/*.apk  
     publishing:
     #   app_store_connect:
     #     auth: integration
