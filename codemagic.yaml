@@ -1,27 +1,47 @@
 workflows:
-  ios-unsigned-build:
-    name: iOS Unsigned Build
-    environment:
-      flutter: stable
-      xcode: latest
+  ios-workflow:
+    name: Android Workflow
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+    # integrations:
+    #   app_store_connect: Ateam-Splace
+    # environment:
+    #   ios_signing:
+    #     distribution_type: app_store
+    #     bundle_identifier: com.splacebar.app.splace
+      # vars:
+      #   APP_ID: com.splacebar.app.splace
+    flutter: stable
+    # xcode: 16.2
+    # cocoapods: default
     scripts:
-      - name: Install dependencies
+      - name: Get Flutter packages
         script: |
           flutter pub get
-          cd ios
-          pod install
-          cd ..
-
-      - name: Build unsigned iOS .app
-        script: |
-          flutter build ios --no-codesign --release
-
-      - name: Package .app into .ipa
-        script: |
-          mkdir -p Payload
-          cp -r build/ios/iphoneos/Runner.app Payload/
-          zip -r unsigned.ipa Payload
-          rm -rf Payload
-
+      # - name: Set up code signing settings on Xcode project
+      #   script: xcode-project use-profiles
+      - name: Build Android
+        script: flutter build apk --release
+      # - name: Flutter build ipa and automatic versioning
+      #   script: |
+      #     flutter build ipa --release \
+      #     --build-name=1.0.0 \
+      #     --build-number=$(($(app-store-connect
+      #     get-latest-testflight-build-number --platform=IOS "$APP_ID") + 1)) \
+      #     --export-options-plist=/Users/builder/export_options.plist
     artifacts:
-      - unsigned.ipa
+      - build/ios/ipa/*.ipa
+      - build/**/outputs/**/*.aab
+    publishing:
+    #   app_store_connect:
+    #     auth: integration
+    #     submit_to_test_flight: true
+    #     beta_groups:
+    #       - Splacebar Internal Team
+      email:
+        recipients:
+          - anugrahkorembeth.ak@gmail.com
+        notify:
+          success: true
+          failure: false
+
