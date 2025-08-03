@@ -5,13 +5,13 @@ workflows:
     max_build_duration: 120
     # integrations:
     #   app_store_connect: Ateam-Splace
-    # environment:
+    environment:
     #   ios_signing:
     #     distribution_type: app_store
     #     bundle_identifier: com.splacebar.app.splace
       # vars:
       #   APP_ID: com.splacebar.app.splace
-    flutter: stable
+      flutter: stable
     # xcode: 16.2
     # cocoapods: default
     scripts:
